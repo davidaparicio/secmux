@@ -1,0 +1,17 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to prod
+        env:
+          # TODO: move these to GitHub secrets before merging
+          API_KEY: "hardcoded-api-key-abc123def456ghi789"
+          DB_PASSWORD: "Pr0dDB$ecret!"
+          AWS_ACCESS_KEY_ID: "AKIAIOSFODNN7EXAMPLE"
+          AWS_SECRET_ACCESS_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+        run: ./deploy.sh

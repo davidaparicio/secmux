@@ -1,0 +1,6 @@
+production:
+  adapter: postgresql
+  host: db.example.com
+  username: app_user
+  password: S3cr3tP@ssw0rd!
+  database: myapp_production

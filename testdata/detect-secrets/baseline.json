@@ -1,0 +1,29 @@
+{
+  "version": "1.4.0",
+  "plugins_used": [
+    {"name": "AWSKeyDetector"},
+    {"name": "BasicAuthDetector"},
+    {"name": "HexHighEntropyString", "limit": 3.0}
+  ],
+  "results": {
+    "config/settings.py": [
+      {
+        "type": "Secret Keyword",
+        "filename": "config/settings.py",
+        "hashed_secret": "aabbccddeeff00112233445566778899aabbccdd",
+        "is_verified": false,
+        "line_number": 42
+      }
+    ],
+    ".env": [
+      {
+        "type": "AWS Access Key",
+        "filename": ".env",
+        "hashed_secret": "1122334455667788990011223344556677889900",
+        "is_verified": false,
+        "line_number": 5
+      }
+    ]
+  },
+  "generated_at": "2026-03-19T19:00:00Z"
+}

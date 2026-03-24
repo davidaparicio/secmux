@@ -1,0 +1,10 @@
+{
+  "auths": {
+    "https://index.docker.io/v1/": {
+      "auth": "dXNlcm5hbWU6c3VwZXJzZWNyZXRwYXNzd29yZDEyMw=="
+    },
+    "ghcr.io": {
+      "auth": "Z2l0aHViX3VzZXI6Z2hwX3dXeHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVoxMg=="
+    }
+  }
+}

@@ -1,0 +1,92 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: secmux
+    main: ./cmd/secmux
+    binary: secmux
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  version_template: "{{ .Tag }}-next"
+
+# ── Docker images ─────────────────────────────────────────────────────────────
+dockers:
+  - id: secmux-amd64
+    goarch: amd64
+    goos: linux
+    image_templates:
+      - "ghcr.io/davidaparicio/secmux:{{ .Version }}-amd64"
+      - "ghcr.io/davidaparicio/secmux:latest-amd64"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--build-arg=VERSION={{ .Version }}"
+      - "--build-arg=COMMIT={{ .Commit }}"
+      - "--build-arg=TARGETARCH=amd64"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.source=https://github.com/davidaparicio/secmux"
+
+  - id: secmux-arm64
+    goarch: arm64
+    goos: linux
+    image_templates:
+      - "ghcr.io/davidaparicio/secmux:{{ .Version }}-arm64"
+      - "ghcr.io/davidaparicio/secmux:latest-arm64"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/arm64"
+      - "--build-arg=VERSION={{ .Version }}"
+      - "--build-arg=COMMIT={{ .Commit }}"
+      - "--build-arg=TARGETARCH=arm64"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.source=https://github.com/davidaparicio/secmux"
+
+docker_manifests:
+  - name_template: "ghcr.io/davidaparicio/secmux:{{ .Version }}"
+    image_templates:
+      - "ghcr.io/davidaparicio/secmux:{{ .Version }}-amd64"
+      - "ghcr.io/davidaparicio/secmux:{{ .Version }}-arm64"
+  - name_template: "ghcr.io/davidaparicio/secmux:latest"
+    image_templates:
+      - "ghcr.io/davidaparicio/secmux:latest-amd64"
+      - "ghcr.io/davidaparicio/secmux:latest-arm64"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"

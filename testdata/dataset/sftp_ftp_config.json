@@ -1,0 +1,10 @@
+{
+  "type": "sftp",
+  "host": "sftp.example.com",
+  "port": 22,
+  "user": "deploy",
+  "password": "Sftp$ecretP@ss!",
+  "privateKey": "/home/user/.ssh/id_rsa",
+  "passphrase": "MyPrivateKeyPassphrase123!",
+  "remotePath": "/var/www/html"
+}

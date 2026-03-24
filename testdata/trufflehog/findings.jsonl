@@ -1,0 +1,2 @@
+{"DetectorName":"AWS","SourceMetadata":{"Data":{"Filesystem":{"file":"secrets/env.go","line":7}}},"Raw":"AKIAIOSFODNN7EXAMPLE","RawV2":"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"}
+{"DetectorName":"Github","SourceMetadata":{"Data":{"Filesystem":{"file":".env","line":3}}},"Raw":"ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","RawV2":""}

@@ -1,0 +1,5 @@
+aws_access_key     = "AKIAI44QH8DHBEXAMPLE"
+aws_secret_key     = "je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY"
+datadog_api_key    = "1234567890abcdef1234567890abcdef"
+datadog_app_key    = "1234567890abcdef1234567890abcdef12345678"
+vault_token        = "hvs.AAAAAQXyz1234567890abcdefghijklmnopqrstu"

@@ -1,0 +1,11 @@
+[
+  {
+    "Description": "AWS Access Key",
+    "File": "config/aws.go",
+    "StartLine": 12,
+    "RuleID": "aws-access-key",
+    "Secret": "AKIAIOSFODNN7EXAMPLE",
+    "Match": "AKIAIOSFODNN7EXAMPLE",
+    "Commit": "abc123"
+  }
+]

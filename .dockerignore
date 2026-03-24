@@ -1,0 +1,8 @@
+.git
+.gitignore
+*.out
+*.test
+testdata/
+.goreleaser.yaml
+README.md
+dist/

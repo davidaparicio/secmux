@@ -1,0 +1,11 @@
+[tool.poetry.source]
+name = "private-pypi"
+url = "https://pypi.example.com/simple/"
+
+[tool.poetry.credentials]
+private-pypi = {username = "ci-bot", password = "pypi-AgEIcHlwaS5vcmcABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890ABCDEF"}
+
+[ci]
+SONAR_TOKEN = "sqp_abcdef1234567890abcdef1234567890abcdef12"
+CODECOV_TOKEN = "abcdef12-1234-1234-1234-abcdef123456"
+PULUMI_ACCESS_TOKEN = "pul-abcdefghijklmnopqrstuvwxyz1234567890abcd"

@@ -1,0 +1,11 @@
+machine api.example.com
+  login deploy-bot
+  password Netrc$ecret!2024
+
+machine npm.pkg.github.com
+  login github-actions
+  password ghp_wWxyzABCDEFGHIJKLMNOPQRSTUVWXYZ77
+
+machine pypi.org
+  login __token__
+  password pypi-AgEIcHlwaS5vcmcFakeTokenHere0000000000000000

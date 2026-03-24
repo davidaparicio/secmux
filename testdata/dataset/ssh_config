@@ -1,0 +1,10 @@
+Host bastion
+    HostName bastion.example.com
+    User deploy
+    IdentityFile ~/.ssh/id_rsa
+
+# Hardcoded fallback — DO NOT COMMIT
+Host legacy-db
+    HostName 10.0.1.50
+    User root
+    Password r00tP@ssw0rd!legacy

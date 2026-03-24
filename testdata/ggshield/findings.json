@@ -1,0 +1,26 @@
+{
+  "id": "scan-001",
+  "type": "path_scan",
+  "entities_with_incidents": [
+    {
+      "filename": "src/config.go",
+      "incidents": [
+        {
+          "policy_break_count": 1,
+          "type": "Incident",
+          "policy_breaks": [
+            {
+              "type": "AWS Keys",
+              "match": {
+                "match": "AKIAIOSFODNN7EXAMPLE",
+                "line_start": 8
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "total_incidents": 1,
+  "total_occurrences": 1
+}
