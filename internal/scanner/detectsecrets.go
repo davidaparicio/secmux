@@ -7,7 +7,9 @@ import (
 	"path/filepath"
 )
 
-// DetectSecretsScanner runs: detect-secrets scan <path>
+// DetectSecretsScanner runs: detect-secrets scan --all-files .
+// It runs with Dir=path so relative file paths in the output are anchored to
+// the scan root. --all-files ensures untracked git files are included.
 type DetectSecretsScanner struct{}
 
 func (d *DetectSecretsScanner) Name() string { return "detect-secrets" }
@@ -26,7 +28,8 @@ type detectSecretsBaseline struct {
 }
 
 func (d *DetectSecretsScanner) Scan(ctx context.Context, path string) ([]Finding, error) {
-	cmd := exec.CommandContext(ctx, "detect-secrets", "scan", path)
+	cmd := exec.CommandContext(ctx, "detect-secrets", "scan", "--all-files", ".")
+	cmd.Dir = path
 	out, err := cmd.Output()
 	if err != nil {
 		return nil, err

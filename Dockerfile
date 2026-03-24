@@ -53,9 +53,7 @@ RUN set -eux; \
     trufflehog --version
 
 # ── Python-based scanners ────────────────────────────────────────────────────
-# Pin detect-secrets to 1.4.x: 1.5.0 actively verifies secrets via external APIs,
-# which filters out all fake/test secrets. 1.4.0 reports all detected candidates.
-RUN pip install --no-cache-dir "detect-secrets==1.4.0" ggshield
+RUN pip install --no-cache-dir detect-secrets ggshield
 
 # ── git-secrets ───────────────────────────────────────────────────────────────
 RUN git clone --depth=1 https://github.com/awslabs/git-secrets /tmp/git-secrets \

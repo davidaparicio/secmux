@@ -49,7 +49,7 @@ func newScanCmd() *cobra.Command {
 				return nil
 			}
 
-			if verbose {
+if verbose {
 				names := make([]string, len(active))
 				for i, s := range active {
 					names[i] = s.Name()
