@@ -20,6 +20,7 @@ func newScanCmd() *cobra.Command {
 		scanners []string
 		format   string
 		timeout  time.Duration
+		noVerify bool
 	)
 
 	cmd := &cobra.Command{
@@ -47,6 +48,12 @@ func newScanCmd() *cobra.Command {
 			if len(active) == 0 {
 				fmt.Fprintln(os.Stderr, "no scanners available (install gitleaks, trufflehog, detect-secrets, or ggshield)")
 				return nil
+			}
+
+			for _, s := range active {
+				if v, ok := s.(scanner.Verifiable); ok {
+					v.SetNoVerify(noVerify)
+				}
 			}
 
 if verbose {
@@ -110,5 +117,6 @@ if verbose {
 	cmd.Flags().StringSliceVarP(&scanners, "scanners", "s", nil, "comma-separated list of scanners (default: all available)")
 	cmd.Flags().StringVarP(&format, "format", "f", "table", "output format: json, sarif, table")
 	cmd.Flags().DurationVarP(&timeout, "timeout", "T", 5*time.Minute, "scan timeout")
+	cmd.Flags().BoolVarP(&noVerify, "no-verify", "n", false, "disable external API verification in supporting scanners")
 	return cmd
 }

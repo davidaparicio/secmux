@@ -24,6 +24,12 @@ type Finding struct {
 	Severity    Severity `json:"severity"`
 }
 
+// Verifiable is optionally implemented by scanners that support disabling
+// external credential verification (e.g. detect-secrets --no-verify).
+type Verifiable interface {
+	SetNoVerify(bool)
+}
+
 // Scanner is the interface every scanner must implement.
 type Scanner interface {
 	// Name returns the unique identifier for this scanner.

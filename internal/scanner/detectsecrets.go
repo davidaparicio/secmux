@@ -7,10 +7,15 @@ import (
 	"path/filepath"
 )
 
-// DetectSecretsScanner runs: detect-secrets scan --all-files .
+// DetectSecretsScanner runs: detect-secrets scan [--no-verify] --all-files .
 // It runs with Dir=path so relative file paths in the output are anchored to
 // the scan root. --all-files ensures untracked git files are included.
-type DetectSecretsScanner struct{}
+// By default external API verification is enabled; set NoVerify to disable it.
+type DetectSecretsScanner struct {
+	NoVerify bool
+}
+
+func (d *DetectSecretsScanner) SetNoVerify(v bool) { d.NoVerify = v }
 
 func (d *DetectSecretsScanner) Name() string { return "detect-secrets" }
 
@@ -28,7 +33,12 @@ type detectSecretsBaseline struct {
 }
 
 func (d *DetectSecretsScanner) Scan(ctx context.Context, path string) ([]Finding, error) {
-	cmd := exec.CommandContext(ctx, "detect-secrets", "scan", "--all-files", ".")
+	args := []string{"scan", "--all-files"}
+	if d.NoVerify {
+		args = append(args, "--no-verify")
+	}
+	args = append(args, ".")
+	cmd := exec.CommandContext(ctx, "detect-secrets", args...)
 	cmd.Dir = path
 	out, err := cmd.Output()
 	if err != nil {
