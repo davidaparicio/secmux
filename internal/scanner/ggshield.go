@@ -18,6 +18,16 @@ func (g *GGShieldScanner) IsAvailable() bool {
 	return err == nil && os.Getenv("GITGUARDIAN_API_KEY") != ""
 }
 
+func (g *GGShieldScanner) SkipReason() string {
+	if _, err := exec.LookPath("ggshield"); err != nil {
+		return ""
+	}
+	if os.Getenv("GITGUARDIAN_API_KEY") == "" {
+		return "ggshield is installed but GITGUARDIAN_API_KEY is not set"
+	}
+	return ""
+}
+
 type ggshieldOutput struct {
 	Entities []struct {
 		Filename  string `json:"filename"`
@@ -36,7 +46,8 @@ type ggshieldOutput struct {
 }
 
 func (g *GGShieldScanner) Scan(ctx context.Context, path string) ([]Finding, error) {
-	cmd := exec.CommandContext(ctx, "ggshield", "secret", "scan", "path", "-r", path, "--json")
+	// -y skips the interactive "N files will be scanned. Continue? [y/N]" prompt.
+	cmd := exec.CommandContext(ctx, "ggshield", "secret", "scan", "path", "-r", "-y", path, "--json")
 	out, err := cmd.Output()
 	if err != nil {
 		if exitErr, ok := err.(*exec.ExitError); ok && exitErr.ExitCode() != 0 && len(out) == 0 {
@@ -45,6 +56,9 @@ func (g *GGShieldScanner) Scan(ctx context.Context, path string) ([]Finding, err
 		// exit 1 with JSON output = findings present
 	}
 
+	if len(out) == 0 {
+		return nil, nil
+	}
 	return parseGGShieldJSON(out)
 }
 

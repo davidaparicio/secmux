@@ -30,6 +30,13 @@ type Verifiable interface {
 	SetNoVerify(bool)
 }
 
+// Diagnosable is optionally implemented by scanners that can explain why they
+// are unavailable. SkipReason returns a non-empty, human-readable string when
+// the scanner is installed but misconfigured (e.g. missing API key).
+type Diagnosable interface {
+	SkipReason() string
+}
+
 // Scanner is the interface every scanner must implement.
 type Scanner interface {
 	// Name returns the unique identifier for this scanner.

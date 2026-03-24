@@ -45,6 +45,17 @@ func newScanCmd() *cobra.Command {
 				active = registry.Available()
 			}
 
+			for _, s := range registry.All() {
+				if s.IsAvailable() {
+					continue
+				}
+				if d, ok := s.(scanner.Diagnosable); ok {
+					if reason := d.SkipReason(); reason != "" {
+						fmt.Fprintf(os.Stderr, "warning: %s\n", reason)
+					}
+				}
+			}
+
 			if len(active) == 0 {
 				fmt.Fprintln(os.Stderr, "no scanners available (install gitleaks, trufflehog, detect-secrets, or ggshield)")
 				return nil
